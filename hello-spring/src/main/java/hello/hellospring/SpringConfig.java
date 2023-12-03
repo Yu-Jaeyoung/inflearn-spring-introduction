@@ -15,22 +15,23 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SpringConfig {
 
-    private EntityManager entityManager;
+    private final MemberRepository memberRepository;
 
-    public SpringConfig(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    @Autowired
+    public SpringConfig(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
     }
 
     @Bean
     public MemberService memberService() {
-        return new MemberService(memberRepository());
+        return new MemberService(memberRepository);
     }
 
-    @Bean
-    public MemberRepository memberRepository() {
+//    @Bean
+//    public MemberRepository memberRepository() {
         // return new MemoryMemberRepository();
         // return new JdbcMemberRepository(dataSource);
         // return new JdbcTemplateMemberRepository(dataSource);
-        return new JpaMemberRepository(entityManager);
-    }
+        // return new JpaMemberRepository(entityManager);
+//    }
 }
